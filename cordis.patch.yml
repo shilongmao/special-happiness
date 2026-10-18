@@ -1,0 +1,5 @@
+# Add-on only: it does not patch or replace dsh-ssh-ops.
+- insert:
+    - id: ssh-agent-bridge
+      name: dsh-ssh-agent-bridge
+      config: {}

@@ -1,0 +1,59 @@
+{
+  "name": "dsh-ssh-agent-bridge",
+  "version": "0.1.0",
+  "description": "Add-on for dsh-ssh-ops: choose a saved SSH resource and remote folder, then open a live remote Agent workspace through a WSL SSHFS mount.",
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "ssh",
+    "sshfs",
+    "wsl",
+    "agent",
+    "workspace"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "peerDependencies": {
+    "dsh-ssh-ops": ">=0.3.22"
+  },
+  "peerDependenciesMeta": {
+    "dsh-ssh-ops": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-sidebar-right",
+        "@deepseek-ai/dsh-client-ui-workspace"
+      ]
+    }
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
