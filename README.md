@@ -6,9 +6,19 @@
 - 从 SSH 资源里选择服务器和远端目录；
 - 一键打开一个正常的 DSH Agent 会话，工作区是**实时远端目录**（WSL SSHFS 挂载），不是本地镜像。
 
+## 项目定位与致谢（请先读）
+
+> **这是一个个人学习性质的附加插件，不是官方项目，也不是 `dsh-ssh-ops` 的替代品。**
+
+- 本项目**依托于** [caoyiwei850/dsh-ssh-ops](https://github.com/caoyiwei850/dsh-ssh-ops) 提供的能力：SSH 资源、连接管理、凭据、SFTP、`ssh_exec` 等全部来自上游项目；
+- 本仓库只增加一层很小的“外壳”：在右侧栏选择远端目录，再把目录以 WSL SSHFS 实时挂载为 Agent 工作区；
+- 出发点完全是**学习 DSH 插件机制、SSHFS 工作流和上游项目的使用方式**，没有替代、竞争或重新实现上游的意图；
+- 本项目与 `dsh-ssh-ops` 作者**没有隶属关系**，不代表上游项目的立场；
+- 衷心感谢 [@caoyiwei850](https://github.com/caoyiwei850) 的开源工作。若上游作者认为本项目有不妥之处，或上游已经有更合适的官方扩展方式，欢迎指出，我会立即调整、修改或停止相关实现。
+
 ## 与 SSH 资源插件的关系
 
-本插件**不修改、不导入、不替换** `dsh-ssh-ops`。它通过宿主服务 `ctx.get('sshOps')` 使用该插件已经注册的 Service 方法：
+本插件**不修改、不导入、不替换** [`dsh-ssh-ops`](https://github.com/caoyiwei850/dsh-ssh-ops)。它通过宿主服务 `ctx.get('sshOps')` 使用上游项目已经注册的 Service 方法：
 
 `profileList`、`profileConnect`、`selectConnection`、`sftpList`、`sftpReadFile`、`sftpWriteFile`、`execOnConnection`。
 
@@ -123,7 +133,3 @@ wsl -d Ubuntu -u root -- rm -f /root/.ssh/dsh-ssh-agent-bridge /root/.ssh/dsh-ss
 - 首次使用会向服务器的 `authorized_keys` 追加一把免密挂载公钥；这是服务器上的变化，不是对 SSH 资源插件的修改。
 - `dsh-ssh-ops` 的 Service 方法不是其文档化 API；本插件做了方法存在性检查，升级后若方法改名会明确报“不兼容”。
 - 目前只验证 Linux **root** 用户（AutoDL 默认）；非 root 用户需要把 `authorized_keys` 路径从 `/root` 改为该用户 home，欢迎提交 PR。
-
-## License
-
-MIT
